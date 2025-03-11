@@ -57,17 +57,34 @@ function ListingEditScreen() {
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const handleSubmit = async (listing) => {
-    setProgress(0);
-    setUploadVisible(true);
-    const result = await listingsApi.addListing(
-      { ...listing, location },
-      (prog) => setProgress(prog)
-    );
+  const handleSubmit = async (values) => {
+    try {
+      setUploadVisible(true);
+      const { title, price, category, description, images } = values
+      const data = new FormData()
 
-    if (!result.ok) {
-      setUploadVisible(false);
-      return alert("Could not save the listing.");
+      data.append('title', title)
+      data.append('price', price)
+      data.append('categoryId', category.id)
+      data.append('description', description)
+
+      images.forEach((img, i) => data.append('images', {
+        name: `image${i}`,
+        type: 'image/jpeg',
+        uri: img,
+      }))
+
+      if (location) data.append('location', JSON.stringify(location))
+
+      const formDataWithoutImg = { title, price, categoryId: category.id, description, location }
+
+      const response = await listingsApi.addListing(data, formDataWithoutImg, setProgress)
+      console.log('Response:', response)
+
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setUploadVisible(false)
     }
   };
 
