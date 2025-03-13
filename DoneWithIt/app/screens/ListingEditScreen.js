@@ -53,7 +53,7 @@ const categories = [
 function ListingEditScreen() {
   const location = useLocation();
 
-  const handleSubmit = async (listing) => {
+  const handleSubmit = async (listing, { resetForm }) => {
     const result = await listingsApi.addListing({ ...listing, location });
 
     if (!result.ok) {
@@ -61,6 +61,8 @@ function ListingEditScreen() {
       return;
     }
     Alert.alert("Your listing was posted successfully");
+
+    resetForm();
   };
 
   return (
