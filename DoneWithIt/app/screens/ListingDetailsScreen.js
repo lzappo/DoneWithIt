@@ -10,14 +10,14 @@ function ListingDetailsScreen({ route }) {
   const listing = route.params;
 
   return (
-    <View>
+    <View style={styles.detailsContainer}>
       <Image
         style={styles.image}
         preview={{ uri: listing.images[0].thumbnalUrl }}
         tint="light"
         uri={listing.images[0].url}
       />
-      <View style={styles.detailsContainer}></View>
+      <View></View>
       <AppText style={styles.title}>{listing.title}</AppText>
       <AppText style={styles.price}>${listing.price}</AppText>
       <View style={styles.userContainer}>
