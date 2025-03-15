@@ -12,6 +12,7 @@ import {
 } from "../components/forms";
 import authApi from "../api/auth";
 import AuthContext from "../auth/context";
+import authStorage from "../auth/storage";
 
 function LoginScreen(props) {
   const authContext = useContext(AuthContext);
@@ -23,6 +24,7 @@ function LoginScreen(props) {
     setLoginFailed(false);
     const user = jwtDecode(result.data);
     authContext.setUser(user);
+    authStorage.storeToken(result.data);
   };
 
   return (
