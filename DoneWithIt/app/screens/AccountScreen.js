@@ -27,6 +27,12 @@ const menuItems = [
   },
 ];
 
+const avatars = {
+  Mosh: require("../assets/mosh.jpg"),
+  Lui: require("../assets/lui.jpeg"),
+  Dina: require("../assets/dina.jpg"),
+};
+
 function AccountScreen({ navigation }) {
   const { user, setUser } = useContext(AuthContext);
 
@@ -36,7 +42,9 @@ function AccountScreen({ navigation }) {
         <ListItem
           title={user.name}
           subTitle={user.email}
-          image={require("../assets/lui.jpeg")}
+          image={
+            avatars[user.name] || require("../assets/avatar-placeholder.jpg")
+          }
         />
       </View>
       <View style={styles.container}>
