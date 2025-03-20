@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import * as Notifications from "expo-notifications";
 import { Alert, Platform } from "react-native";
 
+import expoPushTokensApi from "../api/expoPushTokens";
+
 export default function usePushNotifications() {
   const notificationListener = useRef();
 
@@ -42,7 +44,7 @@ export default function usePushNotifications() {
 
     try {
       const token = await Notifications.getExpoPushTokenAsync();
-      console.log("Push Token:", token);
+      expoPushTokensApi.register(token);
 
       if (Platform.OS === "android") {
         await Notifications.setNotificationChannelAsync("default", {
