@@ -24,6 +24,14 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "plugins": ["expo-secure-store"]
+    "plugins": [
+      "expo-secure-store"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "162cc801-10c7-4bfe-8701-1fe4e3af3548"
+      }
+    },
+    "owner": "lzappo"
   }
 }
