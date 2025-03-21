@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { useState } from "react";
+import { React, useState } from "react";
 import "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
@@ -10,6 +10,7 @@ import useAuthSplashScreen from "./app/auth/useAuthSplashScreen";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
+import { navigationRef } from "./app/navigation/rootNavigation";
 
 export default function App() {
   const [user, setUser] = useState();
@@ -21,7 +22,7 @@ export default function App() {
     <AuthContext.Provider value={{ user, setUser }}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <OfflineNotice />
-        <NavigationContainer theme={navigationTheme}>
+        <NavigationContainer ref={navigationRef} theme={navigationTheme}>
           {user ? <AppNavigator /> : <AuthNavigator />}
         </NavigationContainer>
       </GestureHandlerRootView>

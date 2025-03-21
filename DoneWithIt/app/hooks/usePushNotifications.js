@@ -3,31 +3,51 @@ import * as Notifications from "expo-notifications";
 import { Alert, Platform } from "react-native";
 
 import expoPushTokensApi from "../api/expoPushTokens";
+import navigation, { navigationRef } from "../navigation/rootNavigation";
 
-export default function usePushNotifications() {
-  const notificationListener = useRef();
+export default usePushNotifications = () => {
+  //useRef ensures proper cleanup and prevents multiple listeners
+  const responseListener = useRef();
+
+  const handleNotificationResponse = (response) => {
+    const message = response?.notification?.request?.content?.body;
+
+    if (!message) return;
+
+    const screenMap = {
+      default: "Account",
+    };
+
+    const screenToNavigate = screenMap["default"] || "Account";
+
+    if (navigationRef.isReady()) {
+      navigation.navigate(screenToNavigate);
+    } else {
+      const unsubscribe = navigationRef.current?.addListener("state", () => {
+        if (navigationRef.isReady()) {
+          navigation.navigate(screenToNavigate);
+          unsubscribe(); // Prevent listener from persisting
+        }
+      });
+    }
+  };
 
   useEffect(() => {
-    registerForPushNotificationsAsync();
+    registerForPushNotifications();
 
-    // Foreground notifications
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        Alert.alert(
-          notification.request.content.title,
-          notification.request.content.body
-        );
-      });
+    // navigate to the account screen when the user taps notification
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener(
+        handleNotificationResponse
+      );
 
     // Clean up listener
     return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
+      Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
-  const registerForPushNotificationsAsync = async () => {
+  const registerForPushNotifications = async () => {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -45,6 +65,7 @@ export default function usePushNotifications() {
     try {
       const token = await Notifications.getExpoPushTokenAsync();
       expoPushTokensApi.register(token);
+      console.log(token);
 
       if (Platform.OS === "android") {
         await Notifications.setNotificationChannelAsync("default", {
@@ -67,4 +88,4 @@ export default function usePushNotifications() {
       shouldSetBadge: false,
     }),
   });
-}
+};
