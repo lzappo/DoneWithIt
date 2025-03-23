@@ -7,12 +7,12 @@ import AccountNavigator from "./AccountNavigator";
 import FeedNavigator from "./FeedNavigator";
 import NewListingButton from "./NewListingButton";
 import routes from "./routes";
-import usePushNotifications from "../hooks/usePushNotifications";
+import useNotifications from "../hooks/useNotifications";
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
-  usePushNotifications();
+  useNotifications();
 
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>

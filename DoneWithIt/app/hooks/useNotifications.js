@@ -20,6 +20,7 @@ export default usePushNotifications = () => {
 
     const screenToNavigate = screenMap["default"] || "Account";
 
+    //checks to see if in foreground first, then ensures background functionality
     if (navigationRef.isReady()) {
       navigation.navigate(screenToNavigate);
     } else {
