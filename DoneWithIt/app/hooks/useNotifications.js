@@ -5,9 +5,24 @@ import { Alert, Platform } from "react-native";
 import expoPushTokensApi from "../api/expoPushTokens";
 import navigation, { navigationRef } from "../navigation/rootNavigation";
 
-export default usePushNotifications = () => {
+export default useNotifications = () => {
   //useRef ensures proper cleanup and prevents multiple listeners
   const responseListener = useRef();
+
+  useEffect(() => {
+    registerForPushNotifications();
+
+    // navigate to the account screen when the user taps notification
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener(
+        handleNotificationResponse
+      );
+
+    // Clean up listener
+    return () => {
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   const handleNotificationResponse = (response) => {
     const message = response?.notification?.request?.content?.body;
@@ -32,21 +47,6 @@ export default usePushNotifications = () => {
       });
     }
   };
-
-  useEffect(() => {
-    registerForPushNotifications();
-
-    // navigate to the account screen when the user taps notification
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener(
-        handleNotificationResponse
-      );
-
-    // Clean up listener
-    return () => {
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
 
   const registerForPushNotifications = async () => {
     const { status: existingStatus } =
@@ -80,13 +80,4 @@ export default usePushNotifications = () => {
       console.log("Error getting push token:", error);
     }
   };
-
-  // Background Notification Configuration
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-    }),
-  });
 };

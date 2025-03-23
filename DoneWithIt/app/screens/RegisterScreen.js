@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
-import { registerValidationSchema } from "../validations/authValidation";
+import { registerValidationSchema } from "../validations/validation";
 
 import Screen from "../components/Screen";
 import { Form, FormField, SubmitButton } from "../components/forms";

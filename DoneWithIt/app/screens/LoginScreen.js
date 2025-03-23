@@ -10,7 +10,7 @@ import {
   FormField,
   SubmitButton,
 } from "../components/forms";
-import { loginValidationSchema } from "../validations/authValidation";
+import { loginValidationSchema } from "../validations/validation";
 
 function LoginScreen(props) {
   const auth = useAuth();

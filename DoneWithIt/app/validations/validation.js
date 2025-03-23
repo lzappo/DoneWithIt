@@ -18,3 +18,7 @@ export const listEditValidationSchema = Yup.object().shape({
   category: Yup.object().required().nullable().label("Category"),
   images: Yup.array().min(1, "Please select at least one image."),
 });
+
+export const messageValidationSchema = Yup.object().shape({
+  message: Yup.string().required().min(1).label("Message"),
+});

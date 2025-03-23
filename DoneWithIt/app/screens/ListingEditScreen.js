@@ -11,7 +11,7 @@ import {
 } from "../components/forms";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import useLocation from "../hooks/useLocation";
-import { listEditValidationSchema } from "../validations/authValidation";
+import { listEditValidationSchema } from "../validations/validation";
 
 const categories = [
   {
