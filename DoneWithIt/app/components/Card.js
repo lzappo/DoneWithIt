@@ -5,7 +5,14 @@ import { Image } from "react-native-expo-image-cache";
 import AppText from "./Text";
 import colors from "../config/colors";
 
-function Card({ title, subTitle, imageUrl, onPress, thumbnailUrl }) {
+function Card({
+  title,
+  subTitle,
+  description,
+  imageUrl,
+  onPress,
+  thumbnailUrl,
+}) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
@@ -22,6 +29,11 @@ function Card({ title, subTitle, imageUrl, onPress, thumbnailUrl }) {
           <AppText style={styles.subTitle} numberOfLines={2}>
             {subTitle}
           </AppText>
+          {description && (
+            <AppText style={styles.description} numberOfLines={2}>
+              {description}
+            </AppText>
+          )}
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -37,6 +49,10 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     padding: 20,
+  },
+  description: {
+    color: colors.medium,
+    marginTop: 5,
   },
   image: {
     width: "100%",

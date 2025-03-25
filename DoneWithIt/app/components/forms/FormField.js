@@ -11,7 +11,10 @@ function FormField({ name, width, ...otherProps }) {
     <>
       <TextInput
         onBlur={() => setFieldTouched(name)}
-        onChangeText={(text) => setFieldValue(name, text)}
+        onChangeText={(text) => {
+          console.log(`🟡 [FormField] ${name} Input:`, text);
+          setFieldValue(name, text);
+        }}
         value={values[name]}
         width={width}
         {...otherProps}

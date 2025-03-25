@@ -24,6 +24,7 @@ function ListingDetailsScreen({ route }) {
       <View style={styles.detailsContainer}>
         <AppText style={styles.title}>{listing.title}</AppText>
         <AppText style={styles.price}>${listing.price}</AppText>
+        <AppText style={styles.description}>{listing.description}</AppText>
         <View style={styles.userContainer}>
           <ListItem
             image={require("../assets/lui.jpeg")}
@@ -40,6 +41,11 @@ function ListingDetailsScreen({ route }) {
 const styles = StyleSheet.create({
   detailsContainer: {
     padding: 10,
+  },
+  description: {
+    fontSize: 16,
+    color: colors.medium,
+    marginVertical: 10,
   },
   image: {
     width: "100%",

@@ -54,9 +54,23 @@ function ListingEditScreen() {
   const location = useLocation();
 
   const handleSubmit = async (listing, { resetForm }) => {
+    console.log(
+      "🟡 [handleSubmit] Description Before Sending:",
+      listing.description
+    );
+    console.log("📦 [handleSubmit] Listing Data Sent to API:", {
+      ...listing,
+      location,
+    });
     const result = await listingsApi.addListing({ ...listing, location });
 
+    console.log("🔍 [handleSubmit] API Response:", result);
+
     if (!result.ok) {
+      console.log(
+        "❌ [handleSubmit] Failed to Save Listing:",
+        result.data || result
+      );
       Alert.alert("Could not save the listing.");
       return;
     }
