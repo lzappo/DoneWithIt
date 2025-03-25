@@ -30,8 +30,19 @@
     "extra": {
       "eas": {
         "projectId": "162cc801-10c7-4bfe-8701-1fe4e3af3548"
+      },
+      "bugsnag": {
+        "apiKey": "6360879502179d2dbb3bc45467588793"
       }
     },
-    "owner": "lzappo"
+    "owner": "lzappo",
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "@bugsnag/expo/hooks/post-publish.js",
+          "config": {}
+        }
+      ]
+    }
   }
 }

@@ -1,48 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { registerValidationSchema } from "../validations/validation";
 
+import ActivityIndicator from "../components/ActivityIndicator";
 import Screen from "../components/Screen";
 import { Form, FormField, SubmitButton } from "../components/forms";
-import useApi from "../hooks/useApi";
-import usersApi from "../api/users";
-import useAuth from "../auth/useAuth";
-import authApi from "../api/auth";
 import ErrorMessage from "../components/forms/ErrorMessage";
-import ActivityIndicator from "../components/ActivityIndicator";
+import useRegister from "../hooks/useRegister";
 
 function RegisterScreen(props) {
-  const registerApi = useApi(usersApi.register);
-  const loginApi = useApi(authApi.login);
-  const auth = useAuth();
-  const [error, setError] = useState();
-
-  const handleSubmit = async (userInfo) => {
-    const result = await registerApi.request(userInfo);
-
-    if (!result.ok) {
-      if (result.data) setError(result.data.error);
-      else {
-        setError("An unexpected error occurred.");
-        console.log(result);
-      }
-      return;
-    }
-
-    const { data: authToken } = await loginApi.request(
-      userInfo.email,
-      userInfo.password
-    );
-    auth.logIn(authToken);
-  };
+  const { register, error, loading } = useRegister();
 
   return (
     <>
-      <ActivityIndicator visible={registerApi.loading || loginApi.loading} />
+      <ActivityIndicator visible={loading} />
       <Screen style={styles.container}>
         <Form
           initialValues={{ name: "", email: "", password: "" }}
-          onSubmit={handleSubmit}
+          onSubmit={register}
           validationSchema={registerValidationSchema}
         >
           <ErrorMessage error={error} visible={!!error} />

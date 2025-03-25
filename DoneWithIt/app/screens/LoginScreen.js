@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Image, StyleSheet } from "react-native";
 
+import useLogin from "../hooks/useLogin";
 import authApi from "../api/auth";
 import useAuth from "../auth/useAuth";
 import Screen from "../components/Screen";
@@ -11,54 +12,48 @@ import {
   SubmitButton,
 } from "../components/forms";
 import { loginValidationSchema } from "../validations/validation";
+import ActivityIndicator from "../components/ActivityIndicator";
 
 function LoginScreen(props) {
-  const auth = useAuth();
-  const [loginFailed, setLoginFailed] = useState(false);
-
-  const handleSubmit = async ({ email, password }) => {
-    const result = await authApi.login(email, password);
-    if (!result.ok) return setLoginFailed(true);
-    setLoginFailed(false);
-    auth.logIn(result.data);
-  };
+  const { login, error, loading } = useLogin();
 
   return (
-    <Screen style={styles.container}>
-      <Image style={styles.logo} source={require("../assets/logo-red.png")} />
+    <>
+      <ActivityIndicator visible={loading} />
+      <Screen style={styles.container}>
+        <Image style={styles.logo} source={require("../assets/logo-red.png")} />
 
-      <Form
-        initialValues={{ email: "", password: "" }}
-        onSubmit={handleSubmit}
-        validationSchema={loginValidationSchema}
-      >
-        <ErrorMessage
-          error="Invalid email and/or password."
-          visible={loginFailed}
-        />
-        <FormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="email"
-          keyboardType="email-address"
-          name="email"
-          placeholder="Email"
-          textContentType="emailAddress"
-        />
+        <Form
+          initialValues={{ email: "", password: "" }}
+          onSubmit={login}
+          validationSchema={loginValidationSchema}
+        >
+          <ErrorMessage error={error} visible={!!error} />
 
-        <FormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="lock"
-          name="password"
-          placeholder="Password"
-          secureTextEntry
-          textContentType="password"
-        />
+          <FormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="email"
+            keyboardType="email-address"
+            name="email"
+            placeholder="Email"
+            textContentType="emailAddress"
+          />
 
-        <SubmitButton title="Login" />
-      </Form>
-    </Screen>
+          <FormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="lock"
+            name="password"
+            placeholder="Password"
+            secureTextEntry
+            textContentType="password"
+          />
+
+          <SubmitButton title="Login" />
+        </Form>
+      </Screen>
+    </>
   );
 }
 

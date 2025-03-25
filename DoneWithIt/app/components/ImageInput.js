@@ -10,6 +10,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 import colors from "../config/colors";
+import logger from "../utility/logger";
 
 function ImageInput({ imageUri, onChangeImage }) {
   const requestPermission = async () => {
@@ -38,7 +39,7 @@ function ImageInput({ imageUri, onChangeImage }) {
       });
       if (!result.canceled) onChangeImage(result.assets[0].uri);
     } catch (error) {
-      console.log("Error reading an image", error);
+      logger.log("Error reading an image", error);
     }
   };
 

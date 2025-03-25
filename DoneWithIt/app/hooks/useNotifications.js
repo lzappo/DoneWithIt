@@ -4,6 +4,7 @@ import { Alert, Platform } from "react-native";
 
 import expoPushTokensApi from "../api/expoPushTokens";
 import navigation, { navigationRef } from "../navigation/rootNavigation";
+import logger from "../utility/logger";
 
 export default useNotifications = () => {
   //useRef ensures proper cleanup and prevents multiple listeners
@@ -66,7 +67,6 @@ export default useNotifications = () => {
     try {
       const token = await Notifications.getExpoPushTokenAsync();
       expoPushTokensApi.register(token);
-      console.log(token);
 
       if (Platform.OS === "android") {
         await Notifications.setNotificationChannelAsync("default", {
@@ -77,7 +77,7 @@ export default useNotifications = () => {
         });
       }
     } catch (error) {
-      console.log("Error getting push token:", error);
+      logger.log("Error getting push token:", error);
     }
   };
 };

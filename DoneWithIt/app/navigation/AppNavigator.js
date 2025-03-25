@@ -7,11 +7,13 @@ import AccountNavigator from "./AccountNavigator";
 import FeedNavigator from "./FeedNavigator";
 import NewListingButton from "./NewListingButton";
 import routes from "./routes";
+import useNotificationHandler from "../hooks/useNotificationHandler";
 import useNotifications from "../hooks/useNotifications";
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
+  useNotificationHandler();
   useNotifications();
 
   return (

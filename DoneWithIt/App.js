@@ -11,10 +11,11 @@ import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
 import { navigationRef } from "./app/navigation/rootNavigation";
-import useNotificationHandler from "./app/hooks/useNotificationHandler";
+import logger from "./app/utility/logger";
+
+logger.start();
 
 export default function App() {
-  useNotificationHandler();
   const [user, setUser] = useState();
   const isReady = useAuthSplashScreen(setUser);
 
