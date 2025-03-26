@@ -43,16 +43,19 @@ function AccountScreen({ navigation }) {
           image={
             avatars[user.name] || require("../assets/avatar-placeholder.jpg")
           }
+          swipeable={false}
         />
       </View>
       <View style={styles.container}>
         <FlatList
           data={menuItems}
+          scrollEnabled={false}
           keyExtractor={(menuItem) => menuItem.title}
           ItemSeparatorComponent={ListItemSeparator}
           renderItem={({ item }) => (
             <ListItem
               title={item.title}
+              swipeable={false}
               IconComponent={
                 <Icon
                   name={item.icon.name}
@@ -68,6 +71,7 @@ function AccountScreen({ navigation }) {
         title="Log Out"
         IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
         onPress={() => logOut()}
+        swipeable={false}
       />
     </Screen>
   );

@@ -12,36 +12,43 @@ function ListItem({
   IconComponent,
   onPress,
   renderRightActions,
+  swipeable = true,
 }) {
-  return (
+  const content = (
+    <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
+      <View style={styles.container}>
+        {IconComponent}
+        {image && <Image style={styles.image} source={image} />}
+        <View style={styles.detailsContainer}>
+          <AppText style={styles.title} numberOfLines={1}>
+            {title}
+          </AppText>
+          {subTitle && (
+            <AppText style={styles.subTitle} numberOfLines={2}>
+              {subTitle}
+            </AppText>
+          )}
+        </View>
+        <MaterialCommunityIcons
+          color={colors.medium}
+          name="chevron-right"
+          size={25}
+        />
+      </View>
+    </TouchableHighlight>
+  );
+
+  return swipeable ? (
     <ReanimatedSwipeable
       renderRightActions={renderRightActions}
       overshootRight={false}
       dragOffsetFromRightEdge={5}
       friction={2}
     >
-      <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
-        <View style={styles.container}>
-          {IconComponent}
-          {image && <Image style={styles.image} source={image} />}
-          <View style={styles.detailsContainer}>
-            <AppText style={styles.title} numberOfLines={1}>
-              {title}
-            </AppText>
-            {subTitle && (
-              <AppText style={styles.subTitle} numberOfLines={2}>
-                {subTitle}
-              </AppText>
-            )}
-          </View>
-          <MaterialCommunityIcons
-            color={colors.medium}
-            name="chevron-right"
-            size={25}
-          />
-        </View>
-      </TouchableHighlight>
+      {content}
     </ReanimatedSwipeable>
+  ) : (
+    content
   );
 }
 

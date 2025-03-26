@@ -37,7 +37,7 @@ const addListing = async (listing, handleUploadProgress) => {
   try {
     const response = await client.post(endpoint, data, {
       headers: {
-        "Content-Type": "multipart/form-data", // <-- Add this
+        "Content-Type": "multipart/form-data",
       },
     });
 
