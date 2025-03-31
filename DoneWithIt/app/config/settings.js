@@ -2,13 +2,13 @@ import * as Updates from "expo-updates";
 
 const settings = {
   dev: {
-    apiUrl: "http://10.0.0.139:9000/api",
+    apiUrl: "http://10.0.0.142:9000/api",
   },
   staging: {
-    apiUrl: "http://10.0.0.139:9000/api",
+    apiUrl: "http://10.0.0.142:9000/api",
   },
   prod: {
-    apiUrl: "http://10.0.0.139:9000/api",
+    apiUrl: "http://10.0.0.142:9000/api",
   },
 };
 

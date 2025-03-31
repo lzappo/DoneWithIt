@@ -13,7 +13,11 @@
       "backgroundColor": "#e63c4b"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lzappo.DoneWithIt",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -43,6 +47,12 @@
           "config": {}
         }
       ]
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/162cc801-10c7-4bfe-8701-1fe4e3af3548"
     }
   }
 }
